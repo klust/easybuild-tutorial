@@ -1,5 +1,5 @@
 site_name: "EasyBuild tutorials for LUMI"
-site_url: https://klust.github.io/easybuild-tutorial
+site_url: https://lumi-supercomputer.github.io/easybuild-tutorial
 theme:
   name: material
   logo: img/easybuild_logo.png
