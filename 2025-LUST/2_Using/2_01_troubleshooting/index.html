@@ -4707,8 +4707,9 @@ The <code>make</code> command tripped over the compilation of <code>core.cpp</co
 <code>-march=znver2</code> is not a known option to the <code>g++</code> command.</p>
 <p>OK fine, but now what? Can you spot something suspicious here?
 Wait a minute... Why is <code>make</code> using <code>/usr/bin/g++</code> for the compilation?!
-That's not where our toolchain compiler is installed,
-that's somewhere under <code>/opt/cray/pe/gcc</code>.</p>
+Aren't we using <code>g++-13</code> these days? 
+(Or before the <code>gcc-native</code> modules: That's not where our toolchain compiler is installed,
+that's somewhere under <code>/opt/cray/pe/gcc</code>.)</p>
 <p>Let's see what <code>/usr/bin/g++</code> is:</p>
 <div class="highlight"><pre><span></span><code>$ /usr/bin/g++ --version
 g++ (SUSE Linux) 7.5.0
@@ -4718,7 +4719,7 @@ a few months after the release of the Zen2 architecture, but
 the base version, 7.1, is really from May 2, 2017, long before the Zen2 architecture was around)
 That could definitely explain why it doesn't know about the Zen2 architecture yet...</p>
 <p>Your next step in this case should probably be figuring
-out why <code>/usr/bin/g++</code> is being used rather than just <code>g++</code>, which would
+out why <code>/usr/bin/g++</code> is being used rather than the <code>CC</code> compiler wrapper, which would
 result in using the right compiler version because EasyBuild sets up the build
 environment carefully.</p>
 <p>This is a fictitious example of course, but hopefully it gives you a feeling
@@ -4750,11 +4751,11 @@ things like:</p>
 <p>Note that the installation log is also copied into each software installation
 directory for successful installation, into the <code>easybuild</code> subdirectory.
 For example:</p>
-<div class="highlight"><pre><span></span><code>/appl/lumi/SW/LUMI-21.12/L/EB/ncurses/6.2-cpeGNU-21.12/easybuild/easybuild-ncurses-6.2-20220302.110244.log
+<div class="highlight"><pre><span></span><code>/appl/lumi/SW/LUMI-24.03/L/EB/ncurses/6.4-cpeGNU-24.03/easybuild/easybuild-ncurses-6.4-20240912.211604.log
 </code></pre></div>
 <h3 id="last-log">Last log<a class="headerlink" href="#last-log" title="Permanent link">&para;</a></h3>
 <p>The <code>eb</code> command supports a handy little option that prints the location
-to the most recently updated build log. You can leverage this to quickly
+to the most recently updated build log: <code>--last-log</code>. You can leverage this to quickly
 open the build log of the last <strong><em>failed</em></strong> EasyBuild session in an editor:</p>
 <div class="highlight"><pre><span></span><code>vim $(eb --last-log)
 </code></pre></div>
@@ -4831,7 +4832,7 @@ to writing easyconfig files from scratch <a href="../2_02_creating_easyconfig_fi
 <span class="n">homepage</span> <span class="o">=</span> <span class="s1">&#39;http://subread.sourceforge.net&#39;</span>
 <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;High performance read alignment, quantification and mutation discovery&quot;</span>
 
-<span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;PrgEnv-gnu&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;21.10&#39;</span><span class="p">}</span>
+<span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;PrgEnv-gnu&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;24.02&#39;</span><span class="p">}</span>
 
 <span class="c1"># download from https://download.sourceforge.net/subread/subread-2.0.1-source.tar.gz</span>
 <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;subread-</span><span class="si">%(version)s</span><span class="s1">-source.tar.gz&#39;</span><span class="p">]</span>
@@ -4839,7 +4840,7 @@ to writing easyconfig files from scratch <a href="../2_02_creating_easyconfig_fi
 
 <span class="n">start_dir</span> <span class="o">=</span> <span class="s1">&#39;src&#39;</span>
 
-<span class="c1"># -fcommon is required to compile Subread 2.0.1 with GCC 10/11,</span>
+<span class="c1"># -fcommon is required to compile Subread 2.0.1 from GCC 10 onwards,</span>
 <span class="c1"># which uses -fno-common by default (see https://www.gnu.org/software/gcc/gcc-10/porting_to.html)</span>
 <span class="n">buildopts</span> <span class="o">=</span> <span class="s1">&#39;-f Makefile.Linux CFLAGS=&quot;-fast -fcommon&quot;&#39;</span>
 
@@ -4862,13 +4863,13 @@ so you can gradually fix the problem you'll encounter.</p>
 <p>Also make sure that the pre-installed software stack is available,
 and that the EasyBuild-user module is loaded (unless you installed EasyBuild
 yourself):</p>
-<div class="highlight"><pre><span></span><code>module load LUMI/21.12
+<div class="highlight"><pre><span></span><code>module load LUMI/24.03
 module load EasyBuild-user
 </code></pre></div>
 <p>This will configure EasyBuild correctly for this exercise, though if you already have 
 an existing EasyBuild user installation you may want to work in a different one
 by pointing <code>$EBU_USER_PREFIX</code> to the desired work directory before loading 
-<code>LUMI/21.12</code>.</p>
+<code>LUMI/24.03</code>.</p>
 <p>Check your configuration via <code>eb --show-config</code>.</p>
 <p>Strictly speaking the configuration doesn't matter much for the sake of this
 exercise, but it may help with the step-wise approach we'll take and
@@ -4886,8 +4887,8 @@ the toolchain here...</p>
 should be used as toolchain:</p>
 <div class="highlight"><pre><span></span><code>$ eb subread.eb
 ...
-ERROR: Failed to process easyconfig /pfs/lustrep3/users/kurtlust/easybuild-tutorial/Troubleshooting/subread.eb: Toolchain PrgEnv-gnu not found, 
-available toolchains: ...
+ERROR: Failed to process easyconfig /pfs/lustrep4/users/kulust/easybuild-tutorial/subread.eb: 
+Toolchain PrgEnv-gnu not found, available toolchains: ...
 ...
 </code></pre></div>
 <p><code>PrgEnv-gnu</code> is an HPE Cray PE module that may look like a toolchain - it certainly has 
@@ -4905,6 +4906,9 @@ and where developed by CSCS for their systems using Environment Modules. These w
 with the initial releases of the Cray PE with Lmod modules so new ones were developed on which we
 also built for the LUMI toolchains. Those are called <code>cpeCray</code>, <code>cpeGNU</code>, <code>cpeAOCC</code> and <code>cpeAMD</code>
 and are maintained by LUST and available via the LUMI repositories.</p>
+<p>In this example, we should have used <code>cpeGNU</code> as the toolchain and not <code>PrgEnv-gnu</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeGNU&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;24.02&#39;</span><span class="p">}</span>
+</code></pre></div>
 </details>
 <p>Note: Depending on how you use EasyBuild you may now first run into the problem of Exercise T.2 or 
 first run into the problem covered by Exercise T.3.</p>
@@ -4920,9 +4924,10 @@ the easyconfig file?</p>
 is not found:
 <div class="highlight"><pre><span></span><code>$ eb subread.eb
 ...
-== FAILED: Installation ended unsuccessfully (build directory: /run/user/XXXXXXXX/easybuild/build/Subread/2.0.1/cpeGNU-21.12): build failed (first 300 chars):
-Couldn&#39;t find file subread-2.0.1-source.tar.gz anywhere, and downloading it didn&#39;t work either...
-Paths attempted (in order): ...
+== FAILED: Installation ended unsuccessfully (build directory:
+/run/user/327000143/easybuild/build/Subread/2.0.1/cpeGNU-24.03): build failed 
+(first 300 chars): Couldn&#39;t find file subread-2.0.1-source.tar.gz anywhere, 
+and downloading it didn&#39;t work either... Paths attempted (in order): ...
 </code></pre></div></p>
 <p>In this case, the problem is that the easyconfig file does not specify
 where the sources can be downloaded from. Not automatically at least,
@@ -4939,7 +4944,10 @@ mv subread-2.0.1-source.tar.gz $EBU_USER_PREFIX/sources/s/Subread/
 </code></pre></div></p>
 <p>(assuming you have set <code>EBU_USER_PREFIX</code>, otherwise replace <code>$EBU_USER_PREFIX</code> with
 <code>$HOME/EasyBuild</code>).</p>
-<p>Or, we can change the easyconfig file to specify the location where
+<p>The problem with this approach is that everybody who wants to use this EasyBuild recipe,
+would have to do that (unless we place the source file in the system source file repository).
+Of course it should be possible to do better. 
+We can change the easyconfig file to specify the location where
 the easyconfig file can be downloaded from:
 <div class="highlight"><pre><span></span><code><span class="n">source_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://download.sourceforge.net/subread/&#39;</span><span class="p">]</span>
 <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;subread-</span><span class="si">%(version)s</span><span class="s1">-source.tar.gz&#39;</span><span class="p">]</span>
@@ -4950,7 +4958,7 @@ Note that the <code>source_urls</code> value is a <em>list</em> of candidate dow
 <p>The source tarball is fairly large (23MB), so don't be alarmed if the download takes a little while.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>ls<span class="w"> </span>-lh<span class="w"> </span><span class="nv">$EBU_USER_PREFIX</span>/sources/s/Subread
 total<span class="w"> </span>23M
--rw-rw-r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>XXXXXXXX<span class="w"> </span>XXXXXXXX<span class="w"> </span>23M<span class="w"> </span>Mar<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="m">16</span>:08<span class="w"> </span>subread-2.0.1-source.tar.gz
+-rw-rw-r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>XXXXXXXX<span class="w"> </span>XXXXXXXX<span class="w"> </span>23M<span class="w"> </span>May<span class="w">  </span><span class="m">5</span><span class="w"> </span><span class="m">19</span>:24<span class="w"> </span>subread-2.0.1-source.tar.gz
 </code></pre></div>
 </details>
 <hr />
@@ -4962,23 +4970,24 @@ we don't care too much about details like the version of the dependencies or
 the toolchain here...</p>
 <details class="success">
 <summary>(click to show solution)</summary>
-<p>The installation fails because the easyconfig specifies that <code>PrgEnv-gnu/21.12</code>
+<p>The installation fails because the easyconfig specifies that <code>cpeGNU/23.10</code>
 should be used as toolchain:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>eb<span class="w"> </span>subread.eb
 ...
 ERROR:<span class="w"> </span>Build<span class="w"> </span>of<span class="w"> </span>/pfs/lustrep3/users/kurtlust/easybuild-tutorial/Troubleshooting/subread.eb<span class="w"> </span>failed<span class="w"> </span><span class="o">(</span>err:<span class="w"> </span><span class="s1">&#39;build failed (first 300 chars): </span>
-<span class="s1">No module found for toolchain: cpeGNU/21.10&#39;</span><span class="o">)</span>
+<span class="s1">No module found for toolchain: cpeGNU/23.10&#39;</span><span class="o">)</span>
 ...
 </code></pre></div>
-<p>We don't have this <code>cpeGNU</code> version installed, but we do have <code>cpeGNU/21.12</code>:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>module<span class="w"> </span>avail<span class="w"> </span>cpeGNU/
------<span class="w"> </span>Infrastructure<span class="w"> </span>modules<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>software<span class="w"> </span>stack<span class="w"> </span>LUMI/21.12<span class="w"> </span>on<span class="w"> </span>LUMI-L<span class="w"> </span>-----
-<span class="w">   </span>cpeGNU/21.12
+<p>We don't have this <code>cpeGNU</code> version installed, but we do have <code>cpeGNU/24.03</code>:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>module<span class="w"> </span>spider<span class="w"> </span>cpeGNU/
+-----<span class="w"> </span>Infrastructure<span class="w"> </span>modules<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>software<span class="w"> </span>stack<span class="w"> </span>LUMI/24.03<span class="w"> </span>on<span class="w"> </span>LUMI-L<span class="w"> </span>-----
+<span class="w">   </span>cpeGNU/24.03
 ...
 </code></pre></div>
+<p>(and obviously we should have known since we are installing in <code>LUMI/24.03</code>.)</p>
 <p>So let's try using that instead.</p>
 <p>Edit the easyconfig file so it contains this:</p>
-<div class="highlight"><pre><span></span><code><span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeGNU&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;21.12&#39;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeGNU&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;24.03&#39;</span><span class="p">}</span>
 </code></pre></div>
 </details>
 <hr />
@@ -4989,10 +4998,12 @@ ERROR:<span class="w"> </span>Build<span class="w"> </span>of<span class="w"> </
 <summary>(click to show solution)</summary>
 <p>The compilation fails, but the error message we see is incomplete due to
 EasyBuild truncating the command output (only the 300 first characters of the output are shown):
-<div class="highlight"><pre><span></span><code>== FAILED: Installation ended unsuccessfully (build directory: /run/user/10012026/easybuild/build/Subread/2.0.1/cpeGNU-21.12): build failed
-(first 300 chars): cmd &quot; make  -j 256 -f Makefile.Linux CFLAGS=&quot;-fast -fcommon&quot;&quot; exited with exit code 2 and output:
-gcc  -mtune=core2  -O3 -DMAKE_FOR_EXON  -D MAKE_STANDALONE -D SUBREAD_VERSION=\&quot;&quot;2.0.1&quot;\&quot;  -D_FILE_OFFSET_BITS=64    -fmessage-length=0
--ggdb  -fast -fcommon -I/opt/cray/pe/libsci/21.08.1.2/GNU/9.1/x86 (took 4 secs)
+<div class="highlight"><pre><span></span><code>== FAILED: Installation ended unsuccessfully (build directory:
+/run/user/327000143/easybuild/build/Subread/2.0.1/cpeGNU-24.03): build failed (first 300 chars): 
+cmd &quot;make  -j 16 -f Makefile.Linux CFLAGS=&quot;-fast -fcommon&quot;&quot; exited with exit code 2 and output:
+gcc  -mtune=core2  -O3 -DMAKE_FOR_EXON  -D MAKE_STANDALONE -D SUBREAD_VERSION=\&quot;&quot;2.0.1&quot;\&quot;  
+-D_FILE_OFFSET_BITS=64 -fmessage-length=0  -ggdb  -fast -fcommon 
+-I/opt/cray/pe/libsci/24.03.0/GNU/12.3/x86_6 (took 5 secs)
 </code></pre></div></p>
 <p>If you open the log file (e.g., with <code>view $(eb --last-log)</code>) and scroll to the end,
 the error is pretty obvious:
@@ -5000,7 +5011,7 @@ the error is pretty obvious:
 make: *** [core.o] Error 1
 </code></pre></div></p>
 <p>The easyconfig file hard specifies the <code>-fast</code> compiler flag via the <code>CFLAGS</code> argument to the build command:
-<div class="highlight"><pre><span></span><code><span class="c1"># -fcommon is required to compile Subread 2.0.1 with GCC 10,</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># -fcommon is required to compile Subread 2.0.1 from GCC 10 onwards,</span>
 <span class="c1"># which uses -fno-common by default (see https://www.gnu.org/software/gcc/gcc-10/porting_to.html)</span>
 <span class="n">buildopts</span> <span class="o">=</span> <span class="s1">&#39;-f Makefile.Linux CFLAGS=&quot;-fast -fcommon&quot;&#39;</span>
 </code></pre></div></p>
@@ -5008,7 +5019,7 @@ make: *** [core.o] Error 1
 to hard specify compiler flags (certainly not incorrect ones).
 The comment above the <code>buildopts</code> definition makes it clear that the <code>-fcommon</code>
 flag <em>is</em> required though, because GCC 10 became a bit stricter by
-using <code>-fno-common</code> by default (and we're using GCC 11 in <code>cpeGNU/21.12</code>). 
+using <code>-fno-common</code> by default (and we're using GCC 13 in <code>cpeGNU/24.03</code>). 
 Note that we are using <code>-fcommon</code>
 as an escape mechanism here: it would be better to fix the source code
 and create a patch file instead.</p>
@@ -5027,18 +5038,18 @@ As you can see after the change by doing a dry-run:</p>
 
 Defining build environment...
 
-  export BLAS_INC_DIR=&#39;/opt/cray/pe/libsci/21.08.1.2/GNU/9.1/x86_64/include&#39;
+  export BLAS_INC_DIR=&#39;/opt/cray/pe/libsci/24.03.0/GNU/12.3/x86_64/include&#39;
 ...
   export CC=&#39;cc&#39;
   export CFLAGS=&#39;-O2 -ftree-vectorize -fno-math-errno&#39;
 ...
 [build_step method]
-  running command &quot;make  -j 256 -f Makefile.Linux CFLAGS=&quot;$CFLAGS -fcommon&quot;&quot;
-  (in /run/user/10012026/easybuild/build/Subread/2.0.1/cpeGNU-21.12/Subread-2.0.1/src)
+  running command &quot;make  -j 16 -f Makefile.Linux CFLAGS=&quot;$CFLAGS -fcommon&quot;&quot;
+  (in /rXXXX/build/Subread/2.0.1/cpeGNU-24.03/Subread-2.0.1/src)
 ...
 </code></pre></div>
 <p>EasyBuild will launch the command 
-<div class="highlight"><pre><span></span><code>make  -j 256 -f Makefile.Linux CFLAGS=&quot;$CFLAGS -fcommon&quot;
+<div class="highlight"><pre><span></span><code>make  -j 16 -f Makefile.Linux CFLAGS=&quot;$CFLAGS -fcommon&quot;
 </code></pre></div>
 in a shell where <code>CFLAGS</code> is defined and set to an appropriate value (determined by
 defaults in EasyBuild, settings in the EasyBuild configuration and settings in the
@@ -5051,15 +5062,16 @@ easyconfig file that we shall discuss later).</p>
 <details class="success">
 <summary>(click to show solution)</summary>
 <p>Now the installation itself works but the sanity check fails,
-and hence the module file does not get generated:
+and hence the module file does not get generated:</p>
 <div class="highlight"><pre><span></span><code>$ eb subread.eb
 ...
-== FAILED: Installation ended unsuccessfully (build directory: /run/user/10012026/easybuild/build/Subread/2.0.1/cpeGNU-21.12): 
-build failed (first 300 chars): Sanity check failed: sanity check command featureCounts --version exited with code 255 
-(output: featureCounts: unrecognized option &#39;--version&#39;
+== FAILED: Installation ended unsuccessfully (build directory:
+/run/user/327000143/easybuild/build/Subread/2.0.1/cpeGNU-24.03): build failed (first 300 chars): 
+Sanity check failed: sanity check command featureCounts --version exited with code 255 (output:
+featureCounts: unrecognized option &#39;--version&#39;
 ...
 ...
-</code></pre></div></p>
+</code></pre></div>
 <p>If you look at the full output in the log file you can see
 that the correct option to check the version of the <code>featureCounts</code> command
 is "<code>-v</code>" rather than "<code>--version</code>", so we need to fix this in the easyconfig file.</p>
@@ -5075,11 +5087,11 @@ sanity check and generate the module file again:
 <hr />
 <hr />
 <p><strong><em>Exercise T.6</em></strong><em> - Post-install check of the log file</em></p>
-<p>In the end, you should be able to install Subread 2.0.1 with the cpeGNU 21.12 toolchain by 
+<p>In the end, you should be able to install Subread 2.0.1 with the cpeGNU 24.03 toolchain by 
 fixing the problems with the <code>subread.eb</code> easyconfig file.</p>
 <p>Check your work by manually loading the module and checking the version
 via the <code>featureCounts</code> command, which should look like this:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>Subread/2.0.1-cpeGNU-21.12
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>Subread/2.0.1-cpeGNU-24.03
 ...
 $<span class="w"> </span>featureCounts<span class="w"> </span>-v
 featureCounts<span class="w"> </span>v2.0.1
@@ -5098,8 +5110,8 @@ that we can expect if EasyBuild really did what we expected:</p>
 eb<span class="w"> </span>subread.eb<span class="w"> </span>-f
 </code></pre></div>
 <p>(the last line to force a rebuild).</p>
-<p>Now go to the <code>$EBU_USER_PREFIX/SW/LUMI-21.12/L/Subread/2.0.1-cpeGNU-21.12/easybuild</code>
-(or <code>$HOME/EasyBuild/SW/LUMI-21.12/L/Subread/2.0.1-cpeGNU-21.12/easybuild</code>, depending on your configuration,) directory and open
+<p>Now go to the <code>$EBU_USER_PREFIX/SW/LUMI-24.03/L/Subread/2.0.1-cpeGNU-24.03/easybuild</code>
+(or <code>$HOME/EasyBuild/SW/LUMI-24.03/L/Subread/2.0.1-cpeGNU-24.03/easybuild</code>, depending on your configuration,) directory and open
 the log file in your favourite editor. Search for the build step by searching for the string
 <code>INFO Starting build</code> and look carefully at how the program was actually build...</p>
 <p>You'll very likely have to look at the solution to understand how to correct the
@@ -5123,7 +5135,7 @@ is one of those horror packages that follows no established convention for
 build procedures.</p>
 <p>One of the first lines we 
 run into (yours may differ since this is a parallel build) is</p>
-<div class="highlight"><pre><span></span><code>gcc  -mtune=core2  -O3 -DMAKE_FOR_EXON  -D MAKE_STANDALONE -D SUBREAD_VERSION=\&quot;&quot;2.0.1&quot;\&quot;  -D_FILE_OFFSET_BITS=64    -fmessage-length=0  -ggdb  -O2 -ftree-vectorize -fno-math-errno -fcommon -I/opt/cray/pe/libsci/21.08.1.2/GNU/9.1/x86_64/include  -c -o core.o core.c
+<div class="highlight"><pre><span></span><code>gcc  -mtune=core2  -O3 -DMAKE_FOR_EXON  -D MAKE_STANDALONE -D SUBREAD_VERSION=\&quot;&quot;2.0.1&quot;\&quot;  -D_FILE_OFFSET_BITS=64    -fmessage-length=0  -ggdb  -O2 -ftree-vectorize -fno-math-errno -fcommon -I/opt/cray/pe/libsci/24.03.0/GNU/12.3/x86_64/include  -c -o core.o core.c
 </code></pre></div>
 <p>The flags that we added via <code>CFLAGS</code> are in there but only after some other flags.
 The build process didn't pick up our C compiler either! And o horror, it even defines
@@ -5142,7 +5154,7 @@ do this is</p>
 </code></pre></div>
 <p>We'll need to search for the build directory now as it is not printed when EasyBuild stops in
 a regular way.</p>
-<div class="highlight"><pre><span></span><code>pushd $EASYBUILD_BUILDPATH/Subread/2.0.1/cpeGNU-21.12
+<div class="highlight"><pre><span></span><code>pushd $EASYBUILD_BUILDPATH/Subread/2.0.1/cpeGNU-24.03
 cd subread-2.0.1-source
 cd src
 </code></pre></div>
@@ -5205,7 +5217,7 @@ correct compiler on the <code>make</code> command line:</p>
 <p>and then open the log file (again in the <code>easybuild</code> subdirectory of the software installation
 directory) and check what happened now during the build step.</p>
 <p>As we scroll through the output of the build step, we still see a few lines mentioning
-<code>gcc</code>... It turns out there is a second Makefile hidden in the subdirectory <code>longread-one</code> so we 
+<code>-mtune=core2  -O3 -Wall</code>... It turns out there is a second Makefile hidden in the subdirectory <code>longread-one</code> so we 
 need to edit that one too... So following the second approach we can do this with</p>
 <div class="highlight"><pre><span></span><code><span class="n">prebuildopts</span> <span class="o">=</span> <span class="s2">&quot;sed -e &#39;s/-mtune=core2 $</span><span class="si">{MACOS}</span><span class="s2"> -O$</span><span class="si">{OPT_LEVEL}</span><span class="s2">/$</span><span class="si">{CFLAGS}</span><span class="s2">/&#39; -i Makefile.Linux &amp;&amp; &quot;</span>
 <span class="n">prebuildopts</span> <span class="o">+=</span> <span class="s2">&quot;sed -e &#39;s/-mtune=core2 $</span><span class="si">{MACOS}</span><span class="s2"> -O$</span><span class="si">{OPT_LEVEL}</span><span class="s2">/$</span><span class="si">{CFLAGS}</span><span class="s2">/&#39; -i longread-one/Makefile &amp;&amp; &quot;</span>
@@ -5236,7 +5248,7 @@ are sometimes overlooked in easyconfigs that come with EasyBuild.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 30, 2025 09:07:39">April 30, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 5, 2025 17:03:53">May 5, 2025</span>
   </span>
 
     
