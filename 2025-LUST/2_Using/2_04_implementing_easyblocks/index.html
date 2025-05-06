@@ -801,6 +801,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#reading-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#updating-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Updating parameters
@@ -4784,6 +4793,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#reading-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reading parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#updating-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       Updating parameters
@@ -4955,7 +4973,7 @@ by most GNU software packages.</p>
 Typically this involves highly customised steps, for example specifying dedicated configuration options, creating
 or adjusting specific files, executing non-standard shell commands, etc. Usually a custom implementation of the
 sanity check is also included. Much of the work done in software-specific easyblocks can often also be done 
-in generic easyblocks using parameters such as <code>confdigopts</code> etc., but a software-specific easyblock can
+in generic easyblocks using parameters such as <code>configopts</code> etc., but a software-specific easyblock can
 hide some of that complexity from the user. Other software-specific easyblocks implement very specific
 installation procedures that do not fit in one of the generic ones.</p>
 <p>Using a generic easyblock requires specifying the <code>easyblock</code> parameter in the easyconfig file.
@@ -5005,7 +5023,7 @@ and underscores.</p>
 <ul>
 <li><code>gcc.py</code> (for <em>GCC</em>)</li>
 <li><code>netcdf_fortran.py</code> (for <em>netCDF-Fortran</em>)</li>
-<li><code>gamess_us.py</code> (for <em>GAMESS (US)</em>)</li>
+<li><code>gamess_us.py</code> (for <em>GAMESS-US</em>)</li>
 </ul>
 <p>The <code>get_module_path</code> function provided by the EasyBuild framework in the
 <code>easybuild.framework.easyconfig.easyconfig</code> module returns the (full)
@@ -5029,8 +5047,8 @@ but this namespace is collapsed transparently by EasyBuild (you don't need to im
 configuration option. As long as both the filename of the Python module and the name of the Python class
 are correct, EasyBuild will use these easyblocks when needed.</p>
 <p>On LUMI, the EasyBuild configuration modules take care of setting this parameter (using the corresponding environment
-variable), pointing to custom easyblocks in the LUMI software stack itself and a repo (with a fixed name) that users
-can create themselves. At this moment it does not yet include possible other easyblock repositories in other repositories.</p>
+variable), pointing to custom easyblocks in the LUMI software stack itself, the repo for contributed easyconfigs,
+and a repo (with a fixed name) that users can create themselves. </p>
 <h2 id="structure-of-an-easyblock">Structure of an easyblock<a class="headerlink" href="#structure-of-an-easyblock" title="Permanent link">&para;</a></h2>
 <p>The example below shows the overall structure of an easyblock:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">easybuild.framework.easyblock</span><span class="w"> </span><span class="kn">import</span> <span class="n">EasyBlock</span>
@@ -5080,6 +5098,7 @@ redefining it entirely, since we call out to the original <code>configure_step</
         <span class="nb">super</span><span class="p">(</span><span class="n">EB_Example</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">configure_step</span><span class="p">()</span>
 </code></pre></div>
 <h2 id="easyconfig-parameters">Easyconfig parameters<a class="headerlink" href="#easyconfig-parameters" title="Permanent link">&para;</a></h2>
+<h3 id="reading-parameters">Reading parameters<a class="headerlink" href="#reading-parameters" title="Permanent link">&para;</a></h3>
 <p>All of the easyconfig parameters that are defined in an easyconfig file
 are available via the <code>EasyConfig</code> instance that can be accessed through <code>self.cfg</code> in an easyblock.
 For instance, if the easyconfig file specifies</p>
@@ -5207,6 +5226,8 @@ number of useful functions related to this, including:</p>
 <p><code>std_qa=&lt;dict&gt;</code> to specify regular expression patterns for common questions, and the matching answer;</p>
 </li>
 </ul>
+<p>In EasyBuild 5, the new function <code>run_shell_cmd</code> is introduced to replace these functions,
+and both functions are deprecated and scheduled to be removed in EasyBuild 6.</p>
 <h2 id="manipulating-environment-variables">Manipulating environment variables<a class="headerlink" href="#manipulating-environment-variables" title="Permanent link">&para;</a></h2>
 <p>To (re)define environment variables, the <code>setvar</code> function provided by the
 <a href="https://docs.easybuild.io/en/latest/api/easybuild.tools.environment.html"><code>easybuild.tools.environment</code></a>
@@ -5585,7 +5606,7 @@ with CMake.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 30, 2025 09:07:39">April 30, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 6, 2025 15:20:25">May 6, 2025</span>
   </span>
 
     

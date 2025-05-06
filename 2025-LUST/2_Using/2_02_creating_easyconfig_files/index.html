@@ -884,15 +884,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sources
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#required-configure-option" class="md-nav__link">
     <span class="md-ellipsis">
       Required configure option
@@ -4955,15 +4946,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Sources
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#required-configure-option" class="md-nav__link">
     <span class="md-ellipsis">
       Required configure option
@@ -5055,21 +5037,27 @@ specific for a certain compiler and don't recognise the Cray compilers.</p>
 <ul>
 <li>'critical' values for easyconfig parameters required to make installation succeed;
     <em>For example, the <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/develop/easybuild/easyblocks/b/bowtie2.py">easyblock for bowtie2</a>
-    defines a number of variables used in the Makefile on the make command line to ensure that the right
-    compilers are used (look for the <code>build_step</code> in the easyblock).</em></li>
+    defines a <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/easybuild-easyblocks-v4.9.4/easybuild/easyblocks/b/bowtie2.py#L58">number of variables used in the Makefile on the make command line to ensure that the right
+    compilers are used</a> 
+    (look for the <code>build_step</code> in the easyblock; the link is for the EasyBuild 4.9.4 easyblock).</em></li>
 <li>toolchain-specific aspects of the build and installation procedure (e.g., configure options);<br />
 <em>For example, the <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/develop/easybuild/easyblocks/c/cp2k.py">easyblock for CP2K</a> 
-    will add several compiler options when compiling with gcc and gfortran, including the infamous
-    <code>-fallow-argument-mismatch</code> which is required from gfortran 10 on for many older codes.</em></li>
+    will add several compiler options when compiling with gcc and gfortran, including <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/easybuild-easyblocks-v4.9.4/easybuild/easyblocks/c/cp2k.py#L561">the infamous
+    <code>-fallow-argument-mismatch</code></a> 
+    which is required from gfortran 10 on for many older codes (link for the 4.9.4 easyblock).</em> </li>
 <li>custom (configure) options for dependencies;<br />
 <em>For example, the <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/develop/easybuild/easyblocks/v/vmd.py">easyblock for VMD</a>
-    will add configure options depending on the dependency list of the package.</em></li>
+    will <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/easybuild-easyblocks-v4.9.4/easybuild/easyblocks/v/vmd.py#L170">add configure options depending on the dependency list of the package</a>
+    (link for the 4.9.4 easyblock; search for "additional configopts based on available dependencies" in
+    <code>configure_step</code>).</em></li>
 <li>interactive commands that need to be run;<br />
 <em>For example: The <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/develop/easybuild/easyblocks/m/maple.py">easyblock for maple</a> 
-    responds to a number of interactive questions.</em> </li>
+    does <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/easybuild-easyblocks-v4.9.4/easybuild/easyblocks/m/maple.py#L58">respond to a number of interactive questions</a>
+    (link for the EasyBuild 4.9.4 easyblock; search for the <code>install_step</code> method).</em> </li>
 <li>having to create or adjust specific (configuration) files;<br />
 <em>For example, the <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/develop/easybuild/easyblocks/s/siesta.py">easyblock for Siesta</a>
-    edits one of the configuration files through regular expressions.</em></li>
+    does <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/easybuild-easyblocks-v4.9.4/easybuild/easyblocks/s/siesta.py#L96">edit one of the configuration files through regular expressions</a>
+    (link for the EasyBuild 4.9.4 easyblock, work done in the <code>configure_step</code> method).</em></li>
 <li>'hackish' usage of a generic easyblock;</li>
 <li>complex or very non-standard installation procedure;<br />
 <em>For example, the <a href="https://github.com/easybuilders/easybuild-easyblocks/blob/develop/easybuild/easyblocks/g/gcc.py">easyblock to install the gcc compilers from source</a>,
@@ -5114,8 +5102,8 @@ There are cases where it is important to use
 the right type of quotes however, we will get back to that later (keep it in mind for the exercises!).</p>
 <p>For multi-line descriptions, you will need to use "triple quoting" (which is standard Python syntax):</p>
 <div class="highlight"><pre><span></span><code><span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;This is an example</span>
-<span class="s2"> of a multi-line description.</span>
-<span class="s2"> It is spread across multiple lines.&quot;&quot;&quot;</span>
+<span class="s2">of a multi-line description.</span>
+<span class="s2">It is spread across multiple lines.&quot;&quot;&quot;</span>
 </code></pre></div>
 <p>If no homepage is known for the package, the convention in the EasyBuild community is to use 
 <code>(none)</code> as the value.</p>
@@ -5130,16 +5118,21 @@ parameter:</p>
 <div class="highlight"><pre><span></span><code><span class="n">whatis</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Description: Blosc is an extremely fast, multi-threaded, meta-compressor library&#39;</span><span class="p">]</span>
 </code></pre></div>
 <p>Note that in this case the word "Description:" has to be explicitly specified.</p>
+<p>Unfortunately, using <code>whatis</code> in this way comes with one big disadvantage: It turns off 
+other whatis-lines that EasyBuild would otherwise add automatically. A better solution needs
+to be found and has been proposed to the EasyBuild community, e.g., using another parameter
+<code>short_description</code> that would then be used for the description-line in the whatis-lines
+in the modulefile instead of <code>description</code> if present. But this has not yet been implemented.</p>
 <h4 id="toolchain"><code>toolchain</code><a class="headerlink" href="#toolchain" title="Permanent link">&para;</a></h4>
 <p>EasyBuild also requires that the <a href="../../1_Intro/1_05_terminology/#toolchains">compiler toolchain</a> is specified, via the <code>toolchain</code>
 easyconfig parameter.</p>
 <p>This can either be the <a href="../../1_Intro/1_05_terminology/#system-toolchain"><code>system</code> toolchain</a>, for which a constant named <code>SYSTEM</code> is available:</p>
 <div class="highlight"><pre><span></span><code><span class="n">toolchain</span> <span class="o">=</span> <span class="n">SYSTEM</span>
 </code></pre></div>
-<p>Usually we specify a 'proper' toolchain like the <code>cpeGNU/21.12</code> toolchain we have used bvefore. 
+<p>Usually we specify a 'proper' toolchain like the <code>cpeGNU/24.03</code> toolchain we have used bvefore. 
 The name and version of the toolchain can be specified using a small Python dictionary,
 for example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeGNU&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;21.12&#39;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeGNU&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;24.03&#39;</span><span class="p">}</span>
 </code></pre></div>
 <h3 id="commonly-used-parameters">Commonly used parameters<a class="headerlink" href="#commonly-used-parameters" title="Permanent link">&para;</a></h3>
 <p>You will often need to specify additional easyconfig parameters to get something useful done.
@@ -5150,21 +5143,33 @@ or just "<code>eb -a</code>" for short, or can be consulted in the <a href="http
 <p>The easyblock that should be used for the installation can be specified via the <code>easyblock</code> easyconfig parameter.</p>
 <p>This is not mandatory however, because by default EasyBuild will determine the easyblock to use based on the
 name of the software. If '<code>example</code>' is specified as software name, EasyBuild will try to locate a
-software-specific easyblock named <code>EB_example</code> (in a Python module named <code>example.py</code>). Software-specific
+software-specific easyblock named <code>EB_example</code> (in a Python module named <code>example.py</code>, 
+but that is only a convention for the name). Software-specific
 easyblocks follow the convention that the class name starts with <code>'EB_</code>', followed by the software name
 (where some characters are replaced, like '<code>-</code>' with '<code>_minus_</code>'). It is possible to use different
 naming conventions for software-specific easyblocks, but then EasyBuild will not automatically detect
 that there is one for the package and it will also need to be specified via the <code>easyblock</code> parameter.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Note that EasyBuild will read all available easyblock files when starting up, as that is the only way
+it can know all the class names. An error in an easyblock that prevents the block from loading, will
+lead to a crash of EasyBuild.</p>
+<p>At the time of writing, EasyBuild fails in the oldest toolchains of LUMI because the ROCm easyblock
+looks for a function in a place where it is not present in the oldest versions of Easy/Build on LUMI.
+It is a function that used to be a standard function of the Python <code>distutils</code> package but is removed
+in Python 3.12, and therefore, as it is useful in a lot of easyblocks, got moved into EasyBuild.</p>
+</div>
 <p><strong>Generic easyblocks</strong></p>
 <p>Usually the <code>easyblock</code> value is the name of a <em>generic</em> easyblock, if it is specified. The name of
 a generic easyblock does <em>not</em> start with '<code>EB_</code>', so you can easily distinguish it from a software-specific
 easyblock.</p>
-<p>Here are a couple of commonly used generic easyblocks:</p>
+<p>Here are a couple of commonly used <a href="https://docs.easybuild.io/version-specific/generic-easyblocks/">generic easyblocks</a>:</p>
 <ul>
 <li><code>ConfigureMake</code>: implements the standard <code>./configure</code>, <code>make</code>, <code>make install</code> installation procedure;</li>
 <li><code>CMakeMake</code>: same as <code>ConfigureMake</code>, but with <code>./configure</code> replaced with <code>cmake</code> for the configuration step;</li>
 <li><code>PythonPackage</code>: implements the installation procedure for a single Python package, by default using
-   "<code>python setup.py install</code>" but other methods like using "<code>pip install</code>" are also supported;</li>
+   "<code>python setup.py install</code>" or "<code>pip install</code>" depending on the version, but other methods are
+   also supported;</li>
 <li><code>Bundle</code>: a simple generic easyblock to bundle a set of software packages together in a single installation directory;</li>
 <li><code>PythonBundle</code>: a customized version of the <code>Bundle</code> generic easyblock to install a bundle of Python packages
   in a single installation directory;</li>
@@ -5173,21 +5178,26 @@ easyblock.</p>
 <code>eb --list-easyblocks</code>, which gives an overview of <em>all</em> known easyblocks, and how they relate to each other.</p>
 <p><strong>Custom easyconfig parameters</strong></p>
 <p>Most generic easyblocks provide additional easyconfig parameters to steer their behaviour.
-You can consult these via "<code>eb -a --easyblock</code>" or just "<code>eb -a -e</code>", which results in an
-additional "<code>EASYBLOCK-SPECIFIC</code>" section to be added. See the (partial) output of this command for example:</p>
+You can consult these via "<code>eb -a --easyblock &lt;name_of_easyblock&gt;</code>" 
+or just "<code>eb -a -e &lt;name_of_easyblock&gt;``", which results in an
+additional "</code>EASYBLOCK-SPECIFIC`" section to be added. 
+See the (partial) output of this command for example:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>eb<span class="w"> </span>-a<span class="w"> </span>-e<span class="w"> </span>ConfigureMake
 Available<span class="w"> </span>easyconfig<span class="w"> </span>parameters<span class="w"> </span><span class="o">(</span>*<span class="w"> </span>indicates<span class="w"> </span>specific<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>ConfigureMake<span class="w"> </span>easyblock<span class="o">)</span>:
 ...
 EASYBLOCK-SPECIFIC
 ------------------
-build_cmd*<span class="w">              </span>Build<span class="w"> </span><span class="nb">command</span><span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;make&quot;</span><span class="o">]</span>
-build_type*<span class="w">             </span>Value<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>to<span class="w"> </span>--build<span class="w"> </span>option<span class="w"> </span>of<span class="w"> </span>configure<span class="w"> </span>script,<span class="w"> </span>e.g.,<span class="w"> </span>x86_64-pc-linux-gnu<span class="w"> </span><span class="o">(</span>determined<span class="w"> </span>by<span class="w"> </span>config.guess<span class="w"> </span>shipped<span class="w"> </span>with<span class="w"> </span>EasyBuild<span class="w"> </span><span class="k">if</span><span class="w"> </span>None,<span class="w"> </span>False<span class="w"> </span>implies<span class="w"> </span>to<span class="w"> </span>leave<span class="w"> </span>it<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>configure<span class="w"> </span>script<span class="o">)</span><span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>None<span class="o">]</span>
-configure_cmd*<span class="w">          </span>Configure<span class="w"> </span><span class="nb">command</span><span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;./configure&quot;</span><span class="o">]</span>
-configure_cmd_prefix*<span class="w">   </span>Prefix<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>glued<span class="w"> </span>before<span class="w"> </span>./configure<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">]</span>
-host_type*<span class="w">              </span>Value<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>to<span class="w"> </span>--host<span class="w"> </span>option<span class="w"> </span>of<span class="w"> </span>configure<span class="w"> </span>script,<span class="w"> </span>e.g.,<span class="w"> </span>x86_64-pc-linux-gnu<span class="w"> </span><span class="o">(</span>determined<span class="w"> </span>by<span class="w"> </span>config.guess<span class="w"> </span>shipped<span class="w"> </span>with<span class="w"> </span>EasyBuild<span class="w"> </span><span class="k">if</span><span class="w"> </span>None,<span class="w"> </span>False<span class="w"> </span>implies<span class="w"> </span>to<span class="w"> </span>leave<span class="w"> </span>it<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>configure<span class="w"> </span>script<span class="o">)</span><span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>None<span class="o">]</span>
-install_cmd*<span class="w">            </span>Build<span class="w"> </span><span class="nb">command</span><span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;make install&quot;</span><span class="o">]</span>
-prefix_opt*<span class="w">             </span>Prefix<span class="w"> </span><span class="nb">command</span><span class="w"> </span>line<span class="w"> </span>option<span class="w"> </span><span class="k">for</span><span class="w"> </span>configure<span class="w"> </span>script<span class="w"> </span><span class="o">(</span><span class="s1">&#39;--prefix=&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>None<span class="o">)</span><span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>None<span class="o">]</span>
-tar_config_opts*<span class="w">        </span>Override<span class="w"> </span>tar<span class="w"> </span>settings<span class="w"> </span>as<span class="w"> </span>determined<span class="w"> </span>by<span class="w"> </span>configure.<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>False<span class="o">]</span>
+build_cmd*<span class="w">                      </span>Build<span class="w"> </span><span class="nb">command</span><span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;make&quot;</span><span class="o">]</span>
+build_cmd_targets*<span class="w">              </span>Target<span class="w"> </span>name<span class="w"> </span><span class="o">(</span>string<span class="o">)</span><span class="w"> </span>or<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>target<span class="w"> </span>names<span class="w"> </span>to<span class="w"> </span>build<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">]</span>
+build_type*<span class="w">                     </span>Value<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>to<span class="w"> </span>--build<span class="w"> </span>option<span class="w"> </span>of<span class="w"> </span>configure<span class="w"> </span>script,<span class="w"> </span>e.g.,<span class="w"> </span>x86_64-pc-linux-gnu<span class="w"> </span><span class="o">(</span>determined<span class="w"> </span>by<span class="w"> </span>config.guess<span class="w"> </span>shipped<span class="w"> </span>with<span class="w"> </span>EasyBuild<span class="w"> </span><span class="k">if</span><span class="w"> </span>None,<span class="w"> </span>False<span class="w"> </span>implies<span class="w"> </span>to<span class="w"> </span>leave<span class="w"> </span>it<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>configure<span class="w"> </span>script<span class="o">)</span><span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>None<span class="o">]</span>
+configure_cmd*<span class="w">                  </span>Configure<span class="w"> </span><span class="nb">command</span><span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;./configure&quot;</span><span class="o">]</span>
+configure_cmd_prefix*<span class="w">           </span>Prefix<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>glued<span class="w"> </span>before<span class="w"> </span>./configure<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;&quot;</span><span class="o">]</span>
+configure_without_installdir*<span class="w">   </span>Avoid<span class="w"> </span>passing<span class="w"> </span>an<span class="w"> </span>install<span class="w"> </span>directory<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>configure<span class="w"> </span><span class="nb">command</span><span class="w"> </span><span class="o">(</span>such<span class="w"> </span>as<span class="w"> </span>via<span class="w"> </span>--prefix<span class="o">)</span><span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>False<span class="o">]</span>
+host_type*<span class="w">                      </span>Value<span class="w"> </span>to<span class="w"> </span>provide<span class="w"> </span>to<span class="w"> </span>--host<span class="w"> </span>option<span class="w"> </span>of<span class="w"> </span>configure<span class="w"> </span>script,<span class="w"> </span>e.g.,<span class="w"> </span>x86_64-pc-linux-gnu<span class="w"> </span><span class="o">(</span>determined<span class="w"> </span>by<span class="w"> </span>config.guess<span class="w"> </span>shipped<span class="w"> </span>with<span class="w"> </span>EasyBuild<span class="w"> </span><span class="k">if</span><span class="w"> </span>None,<span class="w"> </span>False<span class="w"> </span>implies<span class="w"> </span>to<span class="w"> </span>leave<span class="w"> </span>it<span class="w"> </span>up<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>configure<span class="w"> </span>script<span class="o">)</span><span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>None<span class="o">]</span>
+install_cmd*<span class="w">                    </span>Install<span class="w"> </span><span class="nb">command</span><span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span><span class="s2">&quot;make install&quot;</span><span class="o">]</span>
+prefix_opt*<span class="w">                     </span>Prefix<span class="w"> </span><span class="nb">command</span><span class="w"> </span>line<span class="w"> </span>option<span class="w"> </span><span class="k">for</span><span class="w"> </span>configure<span class="w"> </span>script<span class="w"> </span><span class="o">(</span><span class="s1">&#39;--prefix=&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span>None<span class="o">)</span><span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>None<span class="o">]</span>
+tar_config_opts*<span class="w">                </span>Override<span class="w"> </span>tar<span class="w"> </span>settings<span class="w"> </span>as<span class="w"> </span>determined<span class="w"> </span>by<span class="w"> </span>configure.<span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>False<span class="o">]</span>
+test_cmd*<span class="w">                       </span>Test<span class="w"> </span><span class="nb">command</span><span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span><span class="o">(</span><span class="s1">&#39;runtest&#39;</span><span class="w"> </span>value<span class="w"> </span>is<span class="w"> </span>appended,<span class="w"> </span>default:<span class="w"> </span><span class="s1">&#39;make&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">[</span>default:<span class="w"> </span>None<span class="o">]</span>
 </code></pre></div>
 <h4 id="sources-patches-and-checksums">Sources, patches, and checksums<a class="headerlink" href="#sources-patches-and-checksums" title="Permanent link">&para;</a></h4>
 <p>In most easyconfig files you will see that a list of source files is specified via the <code>sources</code>
@@ -5230,8 +5240,22 @@ you must use square brackets as shown in the example. The default value for each
   <a href="https://docs.easybuild.io/en/latest/Writing_easyconfig_files.html#common-easyconfig-param-sources-alt">EasyBuild documentation</a> for more information.
   It is also possible to download a given commit from a GitHub repository.</li>
 <li>Specified checksums are usually SHA256 checksum values, but 
-  <a href="https://docs.easybuild.io/en/latest/Writing_easyconfig_files.html?highlight=checksums#checksums">other types are also supported</a>.</li>
+  <a href="https://docs.easybuild.io/writing-easyconfig-files/?h=checksums#common_easyconfig_param_sources_checksums">other types are also supported</a>.</li>
 </ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>One issue with checksums in its simplest form, just a list, is that one has to be
+very careful with the order in which they are specified. That order has to match 
+exactly the order of the source files and then the patch files (that can also be
+checksum-checked). We have seen issues in some versions of EasyBuild in particular in Bundles where
+not every component had a checksum. </p>
+<p>A more robust notation is through using dictionaries for each element as then at 
+least EasyBuild could determine it is using the checksum for the wrong file. See the
+<a href="https://docs.easybuild.io/writing-easyconfig-files/?h=checksums#common_easyconfig_param_sources">section on checksums in the "Writing easyconfig files: the basics" page of the 
+documentation</a>.</p>
+<p>There is also work going on to specify checksums in a large json file outside of the
+easyconfigs, but that is still very badly documented.</p>
+</div>
 <h4 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h4>
 <p>You will often need to list one or more <a href="../../1_Intro/1_05_terminology/#dependencies">dependencies</a> that are required
 to install or run the software.
@@ -5248,17 +5272,25 @@ One typical example of a build dependency is <code>CMake</code>, which is only n
 the build. On LUMI we define a <code>buildtools</code> module for each version of the <code>LUMI</code> software stack
 which contains most popular build tools. This ensures that we use a consistent set of build tools
 and that they do not change over the life time of a stack, also in case of OS upgrades, to 
-increase the reproducibility of the build process</p>
+increase the reproducibility of the build process.</p>
+<p>There is a third kind of dependency that sits between runtime and build dependencies: 
+link-time dependencies: Dependencies that are needed to link the application but not really
+when running. Depending on when the linking is completed, such a dependency can be considered
+a build dependency (when static linking is used) or a run-time dependency (when dynamic linking
+is used so that the library is only fully linked in when loading an application or even just
+on demand). This is not yet explicitly supported by EasyBuild, but may appear in a future version
+as, e.g., when using rpath- or runpath-linking, the dependency also fully becomes a build dependency
+and there is no need to load the dependency module when running the application.</p>
 <p>Here is a simple example of specifying dependencies:</p>
 <div class="highlight"><pre><span></span><code><span class="n">builddependencies</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="p">(</span><span class="s1">&#39;buildtools&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%(toolchain_version)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+  <span class="p">(</span><span class="s1">&#39;buildtools&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%(toolchain_version)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">SYSTEM</span><span class="p">)</span>
 <span class="p">]</span>
 
 <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;cray-hdf5&#39;</span><span class="p">,</span>   <span class="n">EXTERNAL_MODULE</span><span class="p">),</span>
     <span class="p">(</span><span class="s1">&#39;cray-netcdf&#39;</span><span class="p">,</span> <span class="n">EXTERNAL_MODULE</span><span class="p">),</span>    
-    <span class="p">(</span><span class="s1">&#39;GSL&#39;</span><span class="p">,</span>         <span class="s1">&#39;2.7&#39;&#39;),</span>
-    <span class="p">(</span><span class="s1">&#39;ANTLR&#39;</span><span class="p">,</span>       <span class="s1">&#39;2.7.7&#39;</span><span class="p">,</span> <span class="s1">&#39;-python3&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;GSL&#39;</span><span class="p">,</span>         <span class="s1">&#39;2.7.1&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">&#39;ANTLR&#39;</span><span class="p">,</span>       <span class="s1">&#39;2.7.7&#39;</span><span class="p">,</span> <span class="s1">&#39;-cray-python3.11&#39;</span><span class="p">),</span>
 <span class="p">]</span>
 </code></pre></div>
 <p>Both <code>builddependencies</code> and <code>dependencies</code> require a list of tuples,
@@ -5270,10 +5302,12 @@ If this is not specified, it is assumed to be the empty string (<code>''</code>)
 <p>The <code>buildtools</code> build dependency shows that there is a fourth parameter specifying the toolchain 
 used for that dependency and is needed if that toolchain is different from the one used in the example.
 As it is not possible to load several Cray toolchains together (they are not in a hierarchical relation)
-the only useful value on LUMI is <code>True</code> which tells that <code>buildtools</code> is build with the <code>SYSTEM</code> 
+the only useful value on LUMI is <code>SYSTEM</code> or  <code>True</code> which tells that <code>buildtools</code> is build with the <code>SYSTEM</code> 
 toolchain. Here also we use a template, <code>%(toolchain_version)s</code> which - as its name suggests - expands
 to the version of the toolchain, as we version our <code>buildtools</code> modules after the version of the Cray
-toolchains for which they are intended. </p>
+toolchains for which they are intended. You will find this fourth value a lot more in the easyconfig
+files for the common toolchains, to load packages that are not defined in the toolchain itself but
+in a subtoolchain.</p>
 <p>When using the HPE Cray PE based toolchains, another type of dependency comes in: 
 <a href="../2_03_external_modules">external modules</a> (discussed in the next section) that 
 are used to interface with modules provided by the HPE Cray PE but could also be
@@ -5359,7 +5393,11 @@ find yourself having to specify options to the configure, build, test, or instal
   command to the <code>make</code> command, so <code>make</code> will only be run if the command we specified ran correctly. So, the build step will run something like:
   <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">HDF5_PREFIX</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$EBROOTHDF5</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">  </span>make<span class="w"> </span>-j<span class="w"> </span><span class="m">4</span>
 </code></pre></div>
-  The '<code>4</code>' value passed to the <code>-j</code> option shown here, which specifies how many commands <code>make</code> can run in parallel, is automatically determined by EasyBuild based on the number of available cores (taking into account <code>ulimit</code> settings, and cpuset and cgroup restrictions).</p>
+  The '<code>4</code>' value passed to the <code>-j</code> option shown here, which specifies how many commands <code>make</code> can run in parallel, is automatically determined by EasyBuild based on the number of available cores (taking into account <code>ulimit</code> settings, and cpuset and cgroup restrictions). Very recent versions of EasyBuild limit this to 16 and we now do this on LUMI for
+  all versions of EasyBuild that we have. The reason is that especially for C++ codes, using too much
+  parallelism in the build process may lead to out-of-memory situations as some C++ compilations use a lot
+  of memory. Moreover, the speedup from using more than 16 parallel steps in the build process, is often
+  low.</p>
 </li>
 <li>
 <p>Passing the location where the software should be installed via the <code>PREFIX</code> argument to the <code>make install</code> command during the installation step. This results in the
@@ -5401,6 +5439,9 @@ Here is an example:</p>
     <span class="s2">&quot;example --help&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre></div>
+<p>As these are really commands that are passed to a shell, you can pipe the output of one command to another one, etc.
+E.g., pipe to a <code>grep -q</code> command to test if a certain value is present in the output.
+For an example where this is used, check the <a href="https://lumi-supercomputer.github.io/LUMI-EasyBuild-docs/c/ccpe/">LUMI ccpe container modules</a>.</p>
 <h4 id="module-class">Module class<a class="headerlink" href="#module-class" title="Permanent link">&para;</a></h4>
 <p>Finally, you will usually see the <code>moduleclass</code> easyconfig parameter to be defined as well, for example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">moduleclass</span> <span class="o">=</span> <span class="s1">&#39;lib&#39;</span>
@@ -5411,6 +5452,10 @@ Here is an example:</p>
 then only make certain classes that are useful to them visible and more importantly (b) since it is not
 always intuitive to decide which moduleclass should be used for a package, or from a user 's perspective,
 in which category to look for a package.</p>
+<p>At the time of writing, around 20 different module classes were used in EasyBuild:
+ai, bio, cae, chem, compiler, data, debugger, devel, geo, lang, lib, math, mpi, numlib, perf, phys, quantum, system, toolchain, tools and vis. But often there are multiple choices. E.g., what is the difference between math and numlib?
+Or is a GROMACS bio, chem or phys? Given that only one class can be assigned, it turned out that that feature
+is not very useful and doesn't help to find a package quicker.</p>
 <h2 id="generating-tweaked-easyconfigs">Generating tweaked easyconfigs<a class="headerlink" href="#generating-tweaked-easyconfigs" title="Permanent link">&para;</a></h2>
 <p>Sometimes you may want to install software that differs only slightly from an
 existing easyconfig file, like a newer software version or using a different
@@ -5423,10 +5468,10 @@ an existing one.</p>
 <div class="highlight"><pre><span></span><code>eb<span class="w"> </span>example-1.2.3.eb<span class="w"> </span>--try-software-version<span class="w"> </span><span class="m">1</span>.2.4
 </code></pre></div>
 <p>Or, to try using a different compiler toolchain you can use <code>--try-toolchain</code>:</p>
-<div class="highlight"><pre><span></span><code>eb<span class="w"> </span>example-1.2.3-foss-2020b.eb<span class="w"> </span>--try-toolchain<span class="w"> </span>cpeCray,21.12
+<div class="highlight"><pre><span></span><code>eb<span class="w"> </span>example-1.2.3-cpeCray-23.12.eb<span class="w"> </span>--try-toolchain<span class="w"> </span>cpeCray,24.03
 </code></pre></div>
 <p>There is also a <code>--try</code>  option to change an arbitrary parameter in an easyconfig:</p>
-<div class="highlight"><pre><span></span><code>eb<span class="w"> </span>example-1.2.3-foss-2020b.eb<span class="w"> </span>--try-amend<span class="w"> </span><span class="nv">versionsuffix</span><span class="o">=</span><span class="s1">&#39;-test&#39;</span>
+<div class="highlight"><pre><span></span><code>eb<span class="w"> </span>example-1.2.3-cpeCray-24.03.eb<span class="w"> </span>--try-amend<span class="w"> </span><span class="nv">versionsuffix</span><span class="o">=</span><span class="s1">&#39;-test&#39;</span>
 </code></pre></div>
 <p>Its general syntax is </p>
 <div class="highlight"><pre><span></span><code>--try-amend=VAR=VALUE[,VALUE]
@@ -5448,9 +5493,9 @@ the filename, and letting the robot search mechanism locate them.</p>
 <p>So to copy an easyconfig file, we would have to use <code>eb --search</code> first to
 get the full location to it, copy-paste that, and then use the <code>cp</code> command.</p>
 <p>It is a lot easier with <code>--copy-ec</code>:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>eb<span class="w"> </span>--copy-ec<span class="w"> </span>SAMtools-1.11-GCC-10.2.0.eb<span class="w"> </span>SAMtools.eb
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>eb<span class="w"> </span>--copy-ec<span class="w"> </span>SAMtools-1.20-cpeGNU-24.03.eb<span class="w"> </span>SAMtools.eb
 ...
-SAMtools-1.10-GCC-10.2.0.eb<span class="w"> </span>copied<span class="w"> </span>to<span class="w"> </span>SAMtools.eb
+SAMtools-1.20-cpeGNU-24.03.eb<span class="w"> </span>copied<span class="w"> </span>to<span class="w"> </span>SAMtools.eb
 </code></pre></div>
 <p>If you omit the target location, the easyconfig file will simply be copied
 to the current working directory, retaining the original filename.</p>
@@ -5465,10 +5510,10 @@ example software package <code>eb-tutorial</code>.</p>
 <p>You can consult the unpacked sources at <a href="https://github.com/easybuilders/easybuild-tutorial/tree/main/docs/files/eb-tutorial-1.0.1">https://github.com/easybuilders/easybuild-tutorial/tree/main/docs/files/eb-tutorial-1.0.1</a>.</p>
 <h3 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">&para;</a></h3>
 <p>Make sure that a proper version of the <code>LUMI</code> software stack is loaded
-(we recommend <code>LUMI/21.12</code> for the session for which this tutorial was designed)
+(we recommend <code>LUMI/24.03</code> for the session for which this tutorial was designed)
 and also <code>EasyBuild-user</code> is loaded to configure EasyBuild to install in
 <code>$HOME/EasyBuild</code> or <code>$EBU_USER_PREFIX</code>.</p>
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>LUMI/21.12
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>LUMI/24.03
 module<span class="w"> </span>load<span class="w"> </span>EasyBuild-user
 </code></pre></div>
 <h3 id="easyblock_1">Easyblock<a class="headerlink" href="#easyblock_1" title="Permanent link">&para;</a></h3>
@@ -5487,7 +5532,7 @@ module<span class="w"> </span>load<span class="w"> </span>EasyBuild-user
 <p>Let's see what EasyBuild does with this very minimal easyconfig file:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>eb<span class="w"> </span>eb-tutorial.eb
 <span class="o">==</span><span class="w"> </span>Temporary<span class="w"> </span>log<span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">case</span><span class="w"> </span>of<span class="w"> </span>crash<span class="w"> </span>/run/user/XXXXXXXXX/easybuild/tmp/eb-k_82wotb/easybuild-wg0k_reb.log
-ERROR:<span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>process<span class="w"> </span>easyconfig<span class="w"> </span>/pfs/lustrep4/users/XXXXXXXX/easybuild-tutorial-exercises/2022-CSC_and_LO-examples/2_02_example_eb-tutorial/eb-tutorial_v1.eb:<span class="w"> </span>
+ERROR:<span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>process<span class="w"> </span>easyconfig<span class="w"> </span>/XXXXXXXX/easybuild-tutorial/eb-tutorial.eb:<span class="w"> </span>
 No<span class="w"> </span>software-specific<span class="w"> </span>easyblock<span class="w"> </span><span class="s1">&#39;EB_eb_minus_tutorial&#39;</span><span class="w"> </span>found<span class="w"> </span><span class="k">for</span><span class="w"> </span>eb-tutorial
 </code></pre></div>
 <p>It is not mandatory to specify an easyblock in the easyconfig. However, in the absence of that
@@ -5509,11 +5554,11 @@ the order of the parameter definitions doesn't matter (unless one is defined in 
 one of the mandatory easyconfig parameters: <code>toolchain</code>:</p>
 <div class="highlight"><pre><span></span><code>$ eb example.eb
 == Temporary log file in case of crash /run/user/XXXXXXXXX/easybuild/tmp/eb-22om7hut/easybuild-ipozjipf.log
-ERROR: Failed to process easyconfig /pfs/lustrep4/users/XXXXXXXX/easybuild-tutorial-exercises/2022-CSC_and_LO-examples/2_02_example_eb-tutorial/eb-tutorial_v2.eb: 
+ERROR: Failed to process easyconfig /XXXXXXXX/easybuild-tutorial/eb-tutorial.eb: 
 mandatory parameters not provided in pyheader: toolchain
 </code></pre></div>
-<p>We will use <code>cpeCray/21.12</code> as toolchain, so we also define the <code>toolchain</code> easyconfig parameter:</p>
-<div class="highlight"><pre><span></span><code><span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeCray&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;21.12&#39;</span><span class="p">}</span>
+<p>We will use <code>cpeCray/24.03</code> as toolchain, so we also define the <code>toolchain</code> easyconfig parameter:</p>
+<div class="highlight"><pre><span></span><code><span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeCray&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;24.03&#39;</span><span class="p">}</span>
 </code></pre></div>
 <p>In addition, we'll also specify the <code>moduleclass</code>.
 This is not required, but it is usually set to a sensible value:</p>
@@ -5533,7 +5578,7 @@ other examples on this page, LUMI has one for every <code>LUMI</code> software s
 number the same as the stack and corresponding toolchains. It is a good practice to
 add this module as a build dependency:</p>
 <div class="highlight"><pre><span></span><code><span class="n">builddependencies</span> <span class="o">=</span> <span class="p">[</span>
-  <span class="p">(</span><span class="s1">&#39;buildtools&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%(toolchain_version)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+  <span class="p">(</span><span class="s1">&#39;buildtools&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%(toolchain_version)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">SYSTEM</span><span class="p">)</span>
 <span class="p">]</span>
 </code></pre></div>
 <p>In a more traditional EasyBuild setup with the common toolchains, there is usually no need to specify
@@ -5543,44 +5588,57 @@ modules for the dependencies. However, the Cray PE toolchains on LUMI are curren
 such a hierarchy and the <code>SYSTEM</code> toolchain we used for <code>buildtools</code> is not automatically considered
 which is why we need the 4-element version of the dependency specification.</p>
 <p>You can verify that EasyBuild now locates the dependency via <code>eb -D</code> (equivalent with <code>eb --dry-run</code>):</p>
-<div class="highlight"><pre><span></span><code>$ eb eb-tutorial.eb -D
+<p><div class="highlight"><pre><span></span><code>$ eb eb-tutorial.eb -D
  ...
- * [x] /appl/lumi/mgmt/ebrepo_files/LUMI-21.12/LUMI-common/buildtools/buildtools-21.12.eb (module: buildtools/21.12)
- * [x] /appl/lumi/mgmt/ebrepo_files/LUMI-21.12/LUMI-L/cpeCray/cpeCray-21.12.eb (module: cpeCray/21.12)
- * [ ] /pfs/lustrep4/users/kulust/easybuild-tutorial-exercises/2022-CSC_and_LO-examples/2_02_example_eb-tutorial/eb-tutorial_v4.eb (module: eb-tutorial/1.0.-cpeCray-21.12)
+ * [x] /appl/lumi/mgmt/ebfiles_repo/LUMI-24.03/LUMI-L/cpeCray/cpeCray-24.03.eb (module: cpeCray/24.03)
+ * [x] /appl/lumi/mgmt/ebfiles_repo/LUMI-24.03/LUMI-common/buildtools/buildtools-24.03-bootstrap.eb (module: buildtools/24.03-bootstrap)
+ * [x] /appl/lumi/mgmt/ebfiles_repo/LUMI-24.03/LUMI-common/syslibs/syslibs-24.03-static.eb (module: syslibs/24.03-static)
+ * [x] /appl/lumi/mgmt/ebfiles_repo/LUMI-24.03/LUMI-common/buildtools/buildtools-24.03.eb (module: buildtools/24.03)
+ * [ ] /XXXX/easybuild-tutorial/eb-tutorial.eb (module: eb-tutorial/1.0.1-cpeCray-24.03)```
+
+
+### Sources
+
+If you try again after adding `buildtools` as a build dependency, you will see the installation fail again in the
+configuration step. Inspecting the log file reveals this:
 </code></pre></div>
-<h3 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h3>
-<p>If you try again after adding <code>buildtools</code> as a build dependency, you will see the installation fail again in the
-configuration step. Inspecting the log file reveals this:</p>
-<div class="highlight"><pre><span></span><code>CMake Error: The source directory &quot;/run/user/XXXXXXXXX/easybuild/build/ebtutorial/1.0.1/cpeCray-21.12&quot; does not appear to contain CMakeLists.txt.
+CMake Error: The source directory "/run/user/XXXXXXXXX/easybuild/build/ebtutorial/1.0.1/cpeCray-24.03" does not appear to contain CMakeLists.txt.
+<div class="highlight"><pre><span></span><code>Wait, but there *is* a `CMakeLists.txt`, we can see it in the 
+[unpacked sources](https://github.com/easybuilders/easybuild-tutorial/tree/main/docs/files/eb-tutorial-1.0.1)!
+
+Let&#39;s inspect the build directory:
 </code></pre></div>
-<p>Wait, but there <em>is</em> a <code>CMakeLists.txt</code>, we can see it in the 
-<a href="https://github.com/easybuilders/easybuild-tutorial/tree/main/docs/files/eb-tutorial-1.0.1">unpacked sources</a>!</p>
-<p>Let's inspect the build directory:</p>
-<div class="highlight"><pre><span></span><code>$ ls /run/user/XXXXXXXXX/easybuild/build/ebtutorial/1.0.1/cpeCray-21.12
+$ ls /run/user/XXXXXXXXX/easybuild/build/ebtutorial/1.0.1/cpeCray-24.03
 easybuild_obj
-$ ls /run/user/XXXXXXXXX/easybuild/build/ebtutorial/1.0.1/cpeCray-21.12/easybuild_obj
+$ ls /run/user/XXXXXXXXX/easybuild/build/ebtutorial/1.0.1/cpeCray-24.03/easybuild_obj
 $
-</code></pre></div>
-<p>There's nothing there at all! And that's not strange because we didn't actually
-specify any sources in our easyconfig file...</p>
-<p>The <code>sources</code> easyconfig parameter is commonly defined but it is <em>not</em> mandatory,
+<div class="highlight"><pre><span></span><code>There&#39;s nothing there at all! And that&#39;s not strange because we didn&#39;t actually
+specify any sources in our easyconfig file...
+
+The `sources` easyconfig parameter is commonly defined but it is *not* mandatory,
 because some easyconfig files only specify bundles of software packages and hence only
-serve to generate a module file.</p>
-<p>So we need to specify one or more source files that should be used,
-via the <code>sources</code> easyconfig parameter which specifies a <em>list</em> of
-names of source files:</p>
-<div class="highlight"><pre><span></span><code><span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;eb-tutorial-1.0.1.tar.gz&#39;</span><span class="p">]</span>
-</code></pre></div>
+serve to generate a module file.
+
+So we need to specify one or more source files that should be used,
+via the `sources` easyconfig parameter which specifies a *list* of
+names of source files:
+
+```python
+sources = [&#39;eb-tutorial-1.0.1.tar.gz&#39;]
+</code></pre></div></p>
 <p>We can avoid hardcoding the version number here by using a <em>template value</em>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;eb-tutorial-</span><span class="si">%(version)s</span><span class="s1">.tar.gz&#39;</span><span class="p">]</span>
+</code></pre></div>
+<p>or, since we are running on Python 3.6, using f-strings:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;eb-tutorial-</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s1">.tar.gz&#39;</span><span class="p">]</span>
 </code></pre></div>
 <p>And since this is a standard way of naming software files, there's
 even a constant available that we can use:</p>
 <div class="highlight"><pre><span></span><code><span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">SOURCE_TAR_GZ</span><span class="p">]</span>
 </code></pre></div>
+<p>(See also the <a href="https://docs.easybuild.io/version-specific/easyconfig-templates/#template-constants-that-can-be-used-in-easyconfigs">EasyBuild docs, "Templaes for easyconfigs" page</a>)</p>
 <p>That way, we only have the software version specified <em>once</em> in the easyconfig file,
-via the <code>version</code> easyconfig parameter. That will come in useful later (see <a href="#exercises">Exercise 7.2</a>)...</p>
+via the <code>version</code> easyconfig parameter. That will come in useful later (see <a href="#exercises">Exercise E.2</a>)...</p>
 <p>If now we try installing the easyconfig file again, EasyBuild complains
 that it can't find the specified source file anywhere:</p>
 <div class="highlight"><pre><span></span><code>Couldn&#39;t find file eb-tutorial-1.0.1.tar.gz anywhere, and downloading it didn&#39;t work either... 
@@ -5608,23 +5666,23 @@ To define the value of a CMake option, we need to use <code>-DNAME_OF_OPTION</co
 we have to use single quotes to specify the actual value for the <code>EBTUTORIAL_MSG</code> configure option.
 That works fine here, but that's not always the case!
 In some cases we will have to use inner doubles quotes, for example to get environment variables
-expanded when the configure command is run (see <a href="#exercises">Exercise 7.1</a>).</p>
+expanded when the configure command is run (see <a href="#exercises">Exercise E.1</a>).</p>
 <h3 id="sanity-check_1">Sanity check<a class="headerlink" href="#sanity-check_1" title="Permanent link">&para;</a></h3>
 <p>Hopefully that brings us closer to getting the installation to work...</p>
 <div class="highlight"><pre><span></span><code>$ eb eb-tutorial.eb
 ....
 == sanity checking...
 == ... (took 2 secs)
-== FAILED: Installation ended unsuccessfully (build directory: /run/user/XXXXXXXXX/easybuild/build/ebtutorial/1.0.1/cpeCray-21.12):
+== FAILED: Installation ended unsuccessfully (build directory: /run/user/XXXXXXXXX/easybuild/build/ebtutorial/1.0.1/cpeCray-24.03):
 build failed (first 300 chars): Sanity check failed: no (non-empty) directory found at &#39;lib&#39; or &#39;lib64&#39; in
-/users/XXXXXXXX/EasyBuild/SW/LUMI-21.12/L/eb-tutorial/1.0.1-cpeCray-21.12 (took 7 secs)
+/users/XXXXXXXX/EasyBuild/SW/LUMI-24.03/L/eb-tutorial/1.0.1-cpeCray-24.03 (took 7 secs)
 </code></pre></div>
 <p>It got all the way to the sanity check step, that's great!</p>
 <p>The sanity check failed because no '<code>lib</code>' or <code>'lib64'</code> directory was found.
 Indeed:</p>
-<div class="highlight"><pre><span></span><code>$ ls /users/XXXXXXXX/EasyBuild/SW/LUMI-21.12/L/eb-tutorial/1.0.1-cpeCray-21.12
+<div class="highlight"><pre><span></span><code>$ ls /users/XXXXXXXX/EasyBuild/SW/LUMI-24.03/L/eb-tutorial/1.0.1-cpeCray-24.03
 bin
-$ ls /users/XXXXXXXX/EasyBuild/SW/LUMI-21.12/L/eb-tutorial/1.0.1-cpeCray-21.12
+$ ls /users/XXXXXXXX/EasyBuild/SW/LUMI-24.03/L/eb-tutorial/1.0.1-cpeCray-24.03
 eb-tutorial
 </code></pre></div>
 <p>There is only a binary named <code>eb-tutorial</code> in the <code>bin</code> subdirectory.
@@ -5645,7 +5703,7 @@ By enabling trace mode via <code>--trace</code> we can get some more information
 ...
 <span class="o">==</span><span class="w"> </span>sanity<span class="w"> </span>checking...
 <span class="w">  </span>&gt;&gt;<span class="w"> </span>file<span class="w"> </span><span class="s1">&#39;bin/eb-tutorial&#39;</span><span class="w"> </span>found:<span class="w"> </span>OK
-<span class="w">  </span>&gt;&gt;<span class="w"> </span>loading<span class="w"> </span>modules:<span class="w"> </span>eb-tutorial/1.0.1-cpeCray-21.12...
+<span class="w">  </span>&gt;&gt;<span class="w"> </span>loading<span class="w"> </span>modules:<span class="w"> </span>eb-tutorial/1.0.1-cpeCray-24.03...
 <span class="w">  </span>&gt;&gt;<span class="w"> </span>running<span class="w"> </span><span class="nb">command</span><span class="w"> </span><span class="s1">&#39;eb-tutorial&#39;</span><span class="w"> </span>...
 <span class="w">  </span>&gt;&gt;<span class="w"> </span>result<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nb">command</span><span class="w"> </span><span class="s1">&#39;eb-tutorial&#39;</span>:<span class="w"> </span>OK
 ...
@@ -5668,7 +5726,7 @@ Hello from the EasyBuild tutorial!
 <span class="n">homepage</span> <span class="o">=</span> <span class="s1">&#39;https://easybuilders.github.io/easybuild-tutorial&#39;</span>
 <span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;EasyBuild tutorial example&quot;</span>
 
-<span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeCray&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;21.12&#39;</span><span class="p">}</span>
+<span class="n">toolchain</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;cpeCray&#39;</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;24.03&#39;</span><span class="p">}</span>
 
 <span class="n">source_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://github.com/easybuilders/easybuild-tutorial/raw/main/docs/files/&#39;</span><span class="p">]</span>
 <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="n">SOURCE_TAR_GZ</span><span class="p">]</span>
@@ -5700,13 +5758,13 @@ automatically via <code>eb --inject-checksums</code>:</p>
 <p>Finally, we should consider changing the name of the easyconfig that we just developed
 to align with the EasyBuild conventions as otherwise it would not be found when used as
 a dependency of another package. In this case, the name should be
-<code>eb-tutorial-1.0.1-cpeCray-21.12.eb</code>. In fact, EasyBuild stored a processed version
+<code>eb-tutorial-1.0.1-cpeCray-24.03.eb</code>. In fact, EasyBuild stored a processed version
 of our easyconfig with that name in the repository:</p>
 <div class="highlight"><pre><span></span><code>$ ls $EASYBUILD_REPOSITORYPATH
 eb-tutorial
 $ ls $EASYBUILD_REPOSITORYPATH/eb-tutorial
-eb-tutorial-1.0.1-cpeCray-21.12.eb
-$ cat $EASYBUILD_REPOSITORYPATH/eb-tutorial/eb-tutorial-1.0.1-cpeCray-21.12.eb
+eb-tutorial-1.0.1-cpeCray-24.03.eb
+$ cat $EASYBUILD_REPOSITORYPATH/eb-tutorial/eb-tutorial-1.0.1-cpeCray-24.03.eb
 ...
 </code></pre></div>
 <p>Note that EasyBuild has added an additional parameter to the easyconfig file, <code>buildstats</code>,
@@ -5719,8 +5777,8 @@ variables for each module:</p>
 <p><div class="highlight"><pre><span></span><code>$ module load eb-tutorial
 $ env | grep TUTORIAL
 EBVERSIONEBMINTUTORIAL=1.0.1
-EBDEVELEBMINTUTORIAL=/users/XXXXXXXX/EasyBuild/SW/LUMI-21.12/L/eb-tutorial/1.0.1-cpeCray-21.12/easybuild/eb-tutorial-1.0.1-cpeCray-21.12-easybuild-devel
-EBROOTEBMINTUTORIAL=/users/XXXXXXXX/EasyBuild/SW/LUMI-21.12/L/eb-tutorial/1.0.1-cpeCray-21.12
+EBDEVELEBMINTUTORIAL=/users/XXXXXXXX/EasyBuild/SW/LUMI-24.03/L/eb-tutorial/1.0.1-cpeCray-24.03/easybuild/eb-tutorial-1.0.1-cpeCray-24.03-easybuild-devel
+EBROOTEBMINTUTORIAL=/users/XXXXXXXX/EasyBuild/SW/LUMI-24.03/L/eb-tutorial/1.0.1-cpeCray-24.03
 </code></pre></div>
 The most interesting one of those variables is the <code>EBROOT</code> variable which points to the installation directory.
 As variable names cannot contain minus signs, the minus in the module name is replaced with <code>MIN</code> in the name
@@ -5732,13 +5790,13 @@ bin  easybuild
 $ ls EBROOTEBMINTUTORIAL/easybuild
 easybuild-eb-tutorial-1.0.1-20220401.184518.log
 easybuild-eb-tutorial-1.0.1-20220401.184518_test_report.md
-eb-tutorial-1.0.1-cpeCray-21.12-easybuild-devel
-eb-tutorial-1.0.1-cpeCray-21.12.eb
+eb-tutorial-1.0.1-cpeCray-24.03-easybuild-devel
+eb-tutorial-1.0.1-cpeCray-24.03.eb
 reprod
 $ ls EBROOTEBMINTUTORIAL/easybuild/reprod
 easyblocks
-eb-tutorial-1.0.1-cpeCray-21.12.eb
-eb-tutorial-1.0.1-cpeCray-21.12.env
+eb-tutorial-1.0.1-cpeCray-24.03.eb
+eb-tutorial-1.0.1-cpeCray-24.03.env
 hooks
 ls $EBROOTEBMINTUTORIAL/easybuild/reprod/easyblocks
 cmakemake.py  configuremake.py
@@ -5783,12 +5841,12 @@ which is a trivial version bump compared to version 1.0.1.</p>
 <p>You can use the <code>--try-software-version</code> option for this:
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>eb<span class="w"> </span>eb-tutorial.eb<span class="w"> </span>--try-software-version<span class="w"> </span><span class="m">1</span>.1.0
 ...
-<span class="o">==</span><span class="w"> </span>building<span class="w"> </span>and<span class="w"> </span>installing<span class="w"> </span>eb-tutorial/1.1.0-cpeCray-21.12...
+<span class="o">==</span><span class="w"> </span>building<span class="w"> </span>and<span class="w"> </span>installing<span class="w"> </span>eb-tutorial/1.1.0-cpeCray-24.03...
 ...
 <span class="o">==</span><span class="w"> </span>COMPLETED:<span class="w"> </span>Installation<span class="w"> </span>ended<span class="w"> </span>successfully<span class="w"> </span><span class="o">(</span>took<span class="w"> </span><span class="m">4</span><span class="w"> </span>sec<span class="o">)</span>
 </code></pre></div>
 To test:
-<div class="highlight"><pre><span></span><code>$ module load eb-tutorial/1.1.0-cpeCray-21.12
+<div class="highlight"><pre><span></span><code>$ module load eb-tutorial/1.1.0-cpeCray-24.03
 $ eb-tutorial
 I have a message for you:
 Hello from the EasyBuild tutorial! I was installed by XXXXXXXX.
@@ -5798,11 +5856,11 @@ Hello from the EasyBuild tutorial! I was installed by XXXXXXXX.
 in the repository and the <code>easybuild</code> subdirectory from the installation 
 directory. As on LUMI the repository is in the search path we can actually copy
 the file back to the current directory:
-<div class="highlight"><pre><span></span><code>eb --copy-ec eb-tutorial-1.1.0-cpeCray-21.12.    
+<div class="highlight"><pre><span></span><code>eb --copy-ec eb-tutorial-1.1.0-cpeCray-24.03.    
 </code></pre></div>
 Some of the formatting is lost though and the checksum is still missing, so you may want
 to do some cleaning up.
-<div class="highlight"><pre><span></span><code>eb eb-tutorial-1.1.0-cpeCray-21.12.eb --inject-checksum
+<div class="highlight"><pre><span></span><code>eb eb-tutorial-1.1.0-cpeCray-24.03.eb --inject-checksum
 </code></pre></div></p>
 </details>
 <hr />
@@ -5827,7 +5885,7 @@ to do some cleaning up.
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 30, 2025 09:07:39">April 30, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 6, 2025 15:20:25">May 6, 2025</span>
   </span>
 
     

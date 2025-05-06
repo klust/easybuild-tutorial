@@ -4854,6 +4854,7 @@ to <code>Slurm</code>, for example by setting the corresponding environment vari
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">EASYBUILD_JOB_BACKEND</span><span class="o">=</span><span class="s1">&#39;Slurm&#39;</span>
 </code></pre></div>
 <p>On LUMI this is taken care of in the EasyBuild configuration modules such as <code>EasyBuild-user</code>.</p>
+<p>In EasyBuild v5.x the default is already Slurm, and GC3Pie is deprecated.</p>
 <h3 id="job-resources">Job resources<a class="headerlink" href="#job-resources" title="Permanent link">&para;</a></h3>
 <p>To submit an installation as a job, simply use <code>eb --job</code>:</p>
 <div class="highlight"><pre><span></span><code>eb<span class="w"> </span>example.eb<span class="w"> </span>--job
@@ -4915,8 +4916,9 @@ login01<span class="w"> </span>$<span class="w"> </span>eb<span class="w"> </spa
 <p>The problems for the temporary log files are twofold. First, they may end up in a place
 that is not available on the compute nodes. E.g., for the same reasons as for the build
 path, the LUMI EasyBuild configuration will place the temporary files in a subdirectory of
-<code>$XDG_RUNTIME_DIR</code> on the loginnodes but a subdirectory of <code>/dev/shm/$USER</code> on the
-compute nodes. The second problem however is that if an installation fails, those log files are
+<code>$XDG_RUNTIME_DIR</code> on the loginnodes but a subdirectory of <code>/tmp/$sLURM_JOBID</code> on the
+compute nodes (as that one should be cleaned up at the end of the job). 
+The second problem however is that if an installation fails, those log files are
 not even accessible anymore which may leave you wondering about the actual cause of the failing 
 installation...</p>
 <p>To remedy this, there are a couple of EasyBuild configuration options you can use:</p>
@@ -5075,7 +5077,7 @@ $ module avail AUGUSTUS
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 30, 2025 09:07:39">April 30, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 6, 2025 16:08:56">May 6, 2025</span>
   </span>
 
     
