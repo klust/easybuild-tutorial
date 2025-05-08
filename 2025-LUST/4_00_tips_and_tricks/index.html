@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://lumi-supercomputer.github.io/easybuild-tutorial/2025-LUST/4_00_additional_reading/">
+        <link rel="canonical" href="https://lumi-supercomputer.github.io/easybuild-tutorial/2025-LUST/4_00_tips_and_tricks/">
       
       
         <link rel="prev" href="../3_Advanced/3_05_github_integration/">
       
       
-        <link rel="next" href="../../2022-CSC_and_LO/">
+        <link rel="next" href="../5_00_additional_reading/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Additional reading - EasyBuild tutorials for LUMI</title>
+        <title>Tips and tricks - EasyBuild tutorials for LUMI</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#additional-reading" class="md-skip">
+        <a href="#tips-and-tricks" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Additional reading
+              Tips and tricks
             
           </span>
         </div>
@@ -222,6 +222,8 @@
       
         
           
+        
+      
         
       
         
@@ -901,7 +903,7 @@
   
   
   <span class="md-ellipsis">
-    Additional reading
+    Tips and tricks
     
   </span>
   
@@ -914,7 +916,7 @@
   
   
   <span class="md-ellipsis">
-    Additional reading
+    Tips and tricks
     
   </span>
   
@@ -937,27 +939,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#easybuild" class="md-nav__link">
+  <a href="#long-lists-of-elements-for-preconfigopts-or-options-for-configopts" class="md-nav__link">
     <span class="md-ellipsis">
-      EasyBuild
+      Long lists of elements for preconfigopts or options for configopts.
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#hpe-cray-programming-environment" class="md-nav__link">
+  <a href="#more-to-follow" class="md-nav__link">
     <span class="md-ellipsis">
-      HPE Cray Programming Environment
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lumi" class="md-nav__link">
-    <span class="md-ellipsis">
-      LUMI
+      More to follow....
     </span>
   </a>
   
@@ -967,6 +960,29 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5_00_additional_reading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Additional reading
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -4514,27 +4530,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#easybuild" class="md-nav__link">
+  <a href="#long-lists-of-elements-for-preconfigopts-or-options-for-configopts" class="md-nav__link">
     <span class="md-ellipsis">
-      EasyBuild
+      Long lists of elements for preconfigopts or options for configopts.
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#hpe-cray-programming-environment" class="md-nav__link">
+  <a href="#more-to-follow" class="md-nav__link">
     <span class="md-ellipsis">
-      HPE Cray Programming Environment
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#lumi" class="md-nav__link">
-    <span class="md-ellipsis">
-      LUMI
+      More to follow....
     </span>
   </a>
   
@@ -4556,63 +4563,32 @@
 
 
 
-<h1 id="additional-reading">Additional reading<a class="headerlink" href="#additional-reading" title="Permanent link">&para;</a></h1>
-<p><em><a href="../3_Advanced/3_05_github_integration/">[back: GitHub integration]</a></em></p>
-<hr />
-<h2 id="easybuild">EasyBuild<a class="headerlink" href="#easybuild" title="Permanent link">&para;</a></h2>
+<h1 id="tips-and-tricks">Tips and tricks<a class="headerlink" href="#tips-and-tricks" title="Permanent link">&para;</a></h1>
+<h2 id="long-lists-of-elements-for-preconfigopts-or-options-for-configopts">Long lists of elements for <code>preconfigopts</code> or options for <code>configopts</code>.<a class="headerlink" href="#long-lists-of-elements-for-preconfigopts-or-options-for-configopts" title="Permanent link">&para;</a></h2>
+<p>An example showing both is in recent <a href="https://github.com/Lumi-supercomputer/LUMI-EasyBuild-contrib/tree/main/easybuild/easyconfigs/n/NAMD">LUMI NAMD EasyConfigs</a>, e.g., 
+<a href="https://github.com/Lumi-supercomputer/LUMI-EasyBuild-contrib/blob/main/easybuild/easyconfigs/n/NAMD/NAMD-3.0-cpeGNU-24.03-rocm-gpu-resident.eb">"NAMD-3.0-cpeGNU-24.03-rocm-gpu-resident.eb"</a>.</p>
 <ul>
-<li><a href="https://docs.easybuild.io/en/latest/#">EasyBuild documentation</a></li>
-<li><a href="https://easybuild.io/">EasyBuild web site</a> containing links to much of the recent information on
-    EasyBuild.</li>
-<li><a href="https://www.youtube.com/c/EasyBuilders">EasyBuild YouTube channel</a></li>
-<li>This tutorial is an evolution of the 
-    <a href="https://easybuilders.github.io/easybuild-tutorial/2021-lust/">EasyBuild tutorial prepared for the LUMI User Support Team, spring '21</a>
-    given by Kenneth Hoste (UGent, EasyBuild lead developer) and Luca Marsella (CSCS)<ul>
-<li><a href="https://www.youtube.com/watch?v=JTRw8hqi6x0&amp;list=PLhnGtSmEGEQh573bk3BeOj_KCRBBiA5OT">Recordings are available on YouTube</a></li>
-</ul>
+<li>
+<p><a href="https://github.com/Lumi-supercomputer/LUMI-EasyBuild-contrib/blob/main/easybuild/easyconfigs/n/NAMD/NAMD-3.0-cpeGNU-24.03-rocm-gpu-resident.eb#L100">Line 100</a> shows <code>preconfigopts</code> </p>
+<p>The example is not ideal as it would have been better to join with <code>&amp;&amp;</code> also to guarantee
+that the whole configure command fails if one of the commands in <code>preconfigopts</code> failed.</p>
 </li>
-<li>The EasyBuild setup on LUMI is partly insprired on the setup used at CSCS on their Cray systems<ul>
-<li><a href="https://easybuilders.github.io/easybuild-tutorial/2021-lust/cray/easybuild_at_cscs/">Section on the CSCS setup</a>
-    from the LUST EasyBuild tutorial spring '21. </li>
-<li><a href="https://easybuild.io/eum21/#eb-site-talk-cscs">CSCS site presentation</a>
-    during the <a href="https://easybuild.io/eum21/">6th EasyBuild User Meeting in 2021</a></li>
-<li>CSCS site presentation (<a href="https://www.youtube.com/watch?v=rhoHmUhzSGw&amp;list=PLhnGtSmEGEQidEM8MZKkOaVutgt9WmqI0">video</a>/<a href="https://users.ugent.be/~kehoste/eum20/eum20_11_luca_cscs.pdf">slides</a>)
-    during the <a href="https://github.com/easybuilders/easybuild/wiki/5th-EasyBuild-User-Meeting">5h EasyBuild User Meeting in 2020</a></li>
-<li>CSCS site presentation (<a href="https://www.youtube.com/watch?list=PLhnGtSmEGEQhEjG5hD70tRwL3n58aWNHc&amp;t=1451&amp;v=qLuHeaFmydM&amp;feature=youtu.be">video</a>)
-    during the <a href="https://github.com/easybuilders/easybuild/wiki/4th-EasyBuild-User-Meeting">4h EasyBuild User Meeting in 2020</a></li>
-</ul>
+<li>
+<p><a href="https://github.com/Lumi-supercomputer/LUMI-EasyBuild-contrib/blob/main/easybuild/easyconfigs/n/NAMD/NAMD-3.0-cpeGNU-24.03-rocm-gpu-resident.eb#L106">Line 106</a>
+    shows the <code>configopts</code>.</p>
 </li>
 </ul>
-<h2 id="hpe-cray-programming-environment">HPE Cray Programming Environment<a class="headerlink" href="#hpe-cray-programming-environment" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="https://docs.lumi-supercomputer.eu/development/">LUMI documentation: "Developing" section</a></li>
-<li>The Cray PE is mostly documented through man pages. There used to be some documentation on the
-    Cray web site also but the documentation system got reworked after the merger with HPE.
-    The documentation is now in the <a href="https://support.hpe.com/">HPE Support Centre</a> where it
-    is very difficult to find the right version of the documents.</li>
-<li>The <a href="https://github.com/PE-Cray">PE-Cray</a> GitHub project also provides some additional 
-    documentation, including<ul>
-<li><a href="https://github.com/PE-Cray/whitepapers">some whitepapers</a>,</li>
-<li><a href="https://github.com/PE-Cray/cray-openshmemx">documentation for Cray OpenSMHEMX</a> and</li>
-<li><a href="https://github.com/PE-Cray/cray-dsmml">information about Cray DSMML</a>
-though much of that information ia also not updated regularly anymore.</li>
-</ul>
-</li>
-</ul>
-<h2 id="lumi">LUMI<a class="headerlink" href="#lumi" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="https://lumi-supercomputer.eu/">LUMI web site</a></li>
-<li><a href="https://docs.lumi-supercomputer.eu/">LUMI User Documentation</a><ul>
-<li><a href="https://docs.lumi-supercomputer.eu/computing/Lmod_modules/">Lmod</a></li>
-<li><a href="https://docs.lumi-supercomputer.eu/computing/softwarestacks/">Organisation of the software stack</a></li>
-<li><a href="https://docs.lumi-supercomputer.eu/software/installing/easybuild/">EasyBuild on LUMI</a></li>
-</ul>
-</li>
-<li><a href="https://easybuild.io/eum22/#lumi">EasyBuild on LUMI presentation</a>
-    (<a href="https://www.youtube.com/watch?v=hZezVG6lJNk&amp;list=PLhnGtSmEGEQgCneeSQvYoIZrbv7wIKlo2">video</a>/<a href="https://easybuild.io/eum22/001_eum22_EasyBuild_on_LUMI.pdf">slides</a>)
-    during the <a href="https://easybuild.io/eum22/">7th EasyBuild User Meeting in 2022</a> </li>
-</ul>
-<p><em><a href="../">[next: Overview]</a></em></p>
+<p>Of course, one could try to create one large string in Python, or break the assignment up, e.g.,</p>
+<div class="highlight"><pre><span></span><code>configopts  = &#39;--charm-arch $EBTYPECHARMPLUSPLUS &#39;
+configopts += &#39;--charm-base $EBROOTCHARMPLUSPLUS &#39;
+...
+</code></pre></div>
+<p>(and note the spaces that we now have to add at the end), but the "join" method has something
+elegant, makes it very easy to add additional flags or commands, and is less error-prone.
+There is also plenty of space left on each line to explain why an option is used or what it
+means, to make the job easier for others who may want to update or customise this EasyConfig.</p>
+<h2 id="more-to-follow">More to follow....<a class="headerlink" href="#more-to-follow" title="Permanent link">&para;</a></h2>
+<p><em><a href="../5_00_additional_reading.md">[Next: Additional reading]</a></em></p>
 
 
 
@@ -4633,7 +4609,7 @@ though much of that information ia also not updated regularly anymore.</li>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 30, 2025 09:07:39">April 30, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 8, 2025 10:46:44">May 8, 2025</span>
   </span>
 
     

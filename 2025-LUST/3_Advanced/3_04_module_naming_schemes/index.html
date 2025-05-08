@@ -232,6 +232,8 @@
       
         
       
+        
+      
     
     
     
@@ -1105,7 +1107,30 @@
   
   
     <li class="md-nav__item">
-      <a href="../../4_00_additional_reading/" class="md-nav__link">
+      <a href="../../4_00_tips_and_tricks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../5_00_additional_reading/" class="md-nav__link">
         
   
   
@@ -4855,12 +4880,18 @@
 <h1 id="module-naming-schemes">Module naming schemes<a class="headerlink" href="#module-naming-schemes" title="Permanent link">&para;</a></h1>
 <p><em><a href="../3_03_slurm_jobs/">[back: Submitting installations as Slurm jobs]</a></em></p>
 <hr />
+<div class="admonition warning">
+<p class="admonition-title">May be outdated</p>
+<p>This section is mostly borrowed from the standard EasyBuild tutorials. 
+It is likely also outdated with respect to the implementation of the
+<code>HierarchicalMNS</code> naming scheme.</p>
+</div>
 <p>Up until now we have used the naming scheme in use on LUMI which is for many practical purposes
 is indistinguishable from the default EasyBuild naming scheme (<code>EasyBuildMNS</code>).
 It produces module files with names that closely resemble to the names of the
 corresponding easyconfig files.
-For example, when installing <code>zlib-1.2.11-cpeGNU-21.12.eb</code> the generated module was named 
-<code>zlib/1.2.11-cpeGNU-21.12</code>.</p>
+For example, when installing <code>zlib-1.3.1-cpeGNU-24.03.eb</code> the generated module was named 
+<code>zlib/1.3.1-cpeGNU-24.03</code>.</p>
 <p>EasyBuild supports several different module naming schemes:</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>eb<span class="w"> </span>--avail-module-naming-schemes
 List<span class="w"> </span>of<span class="w"> </span>supported<span class="w"> </span>module<span class="w"> </span>naming<span class="w"> </span>schemes:
@@ -4894,7 +4925,7 @@ module naming schemes, which are characterized by:</p>
 consists of a <em>hierarchy</em> of module files. 
 A fairly typical 3-level scheme (<code>Core</code>, <code>Compiler</code> and <code>MPI</code>) has been
 discussed in the <a href="../../1_Intro/1_02_Lmod#lmod-hierarchy">section on Lmod</a>.
-This typical Lmod hierarcny would map very well on the EasyBuild common toolchains.</p>
+This typical Lmod hierarchy would map very well on the EasyBuild common toolchains.</p>
 <p>In fact, for the example</p>
 <div align="center"><img src="../../../img/hmns-2021b.png" width="60%"/></div>
 
@@ -4907,7 +4938,7 @@ would be installed using the regular <code>foss</code> toolchain or the <code>go
 <p>On LUMI, where software is installed through the Cray Programming Environment with no real choice of
 MPI implementation, a two-level arrangement would still make a lot of sense, with at the <code>Core</code> level
 all software compiled with the SYSTEM toolchain while there could be a <code>PrgEnv</code> level for software
-compiled with a particular programming environment aka cpeGNU/cpeCray/cpeAOCC toolchain. Such a scheme
+compiled with a particular programming environment aka cpeGNU/cpeCray/cpeAOCC/cpeAMD toolchain. Such a scheme
 is used on the Cray systems at CSCS.</p>
 <p>To recap, the characteristics of a module hierarchy are:</p>
 <ul>
@@ -4937,9 +4968,9 @@ we will stick to the standard core / compiler / MPI hierarchy.</p>
 <h4 id="length-of-module-names">Length of module names<a class="headerlink" href="#length-of-module-names" title="Permanent link">&para;</a></h4>
 <p>When using a flat module naming scheme, module names can be fairly long and perhaps confusing. For a <code>HDF5</code> installation 
 with the EasyBuild common toolchains for example,
-one might have <code>HDF5/1.12.1-gompi-2021b</code> as module name. The <code>-gompi-2021b</code> part of the name refers to the toolchain that was
+one might have <code>HDF5/1.14.5-gompi-2024a</code> as module name. The <code>-gompi-2024a</code> part of the name refers to the toolchain that was
 used for this installation, but it may be confusing to some people (what kind of Pokémon is a "gompi"?!).</p>
-<p>In the example module hierarchy shown above, the module for <code>HDF5</code> could simply be named <code>HDF5/1.12.1</code> which is basically the bare
+<p>In the example module hierarchy shown above, the module for <code>HDF5</code> could simply be named <code>HDF5/1.14.5</code> which is basically the bare
 essentials: software name and version. That's way better, nice and clean!</p>
 <h4 id="amount-of-available-modules">Amount of available modules<a class="headerlink" href="#amount-of-available-modules" title="Permanent link">&para;</a></h4>
 <p>The output of "<code>module avail</code>" can be quite overwhelming if lots of module files
@@ -4978,8 +5009,8 @@ relevant to the software they need in their bioinformatics pipeline...</p>
 is available right after login, which could be the ones used in the most recent toolchain, or the
 recommended versions. More experienced users could then leverage the "<code>module spider</code>" command to navigate
 the module hierarchy.</p>
-<p>On LUMI this would mean loading a default software stack, but due to the the default modules are currently
-loaded on LUMI this was not possible to accomplish without losing other functionality of the module tree.</p>
+<p>On LUMI this would mean loading a default software stack and toolchain module (if the scheme were fully hierarchical).
+However, CSC gave preference to a login environment that looks like that on a typical Cray system.</p>
 <h2 id="using-a-custom-module-naming-scheme">Using a custom module naming scheme<a class="headerlink" href="#using-a-custom-module-naming-scheme" title="Permanent link">&para;</a></h2>
 <p>Next to the module naming schemes that are included with EasyBuild,
 you can also define your own module naming scheme (MNS), and configure EasyBuild to use it
@@ -5314,7 +5345,7 @@ Currently<span class="w"> </span>Loaded<span class="w"> </span>Modules:
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="April 30, 2025 09:07:39">April 30, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="May 8, 2025 09:35:25">May 8, 2025</span>
   </span>
 
     
